@@ -4,7 +4,7 @@ export default function LinkCard({ link, refreshLinks }) {
   const archiveLink = async () => {
     link.archived = true;
     try {
-      await fetch("/api/updateLink", {
+      await fetch("/.netlify/functions/updateLink", {
         method: "PUT",
         body: JSON.stringify(link),
       });

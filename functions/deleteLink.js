@@ -1,13 +1,14 @@
 require("dotenv").config();
 const formattedResponse = require("./utils/formattedResponse");
-const { GET_LINKS } = require("./utils/linkQueries.js");
+const { DELETE_LINK } = require("./utils/linkQueries.js");
 const sendQuery = require("./utils/sendQuery");
 
 exports.handler = async (event) => {
+  const { id } = JSON.parse(event.body);
+  const variables = { id };
   try {
-    const res = await sendQuery(GET_LINKS);
-    const data = res.allLinks.data;
-    return formattedResponse(200, data);
+    const { deleteLink: deletedLink } = await sendQuery(DELETE_LINK, variables);
+    return formattedResponse(200, deletedLink);
   } catch (err) {
     console.log(err);
     return formattedResponse(500, { err: "Something went wrong" });

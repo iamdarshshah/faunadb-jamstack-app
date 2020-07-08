@@ -1,9 +1,13 @@
+const axios = require("axios");
 require("dotenv").config();
 const formattedResponse = require("./utils/formattedResponse");
 const { DELETE_LINK } = require("./utils/linkQueries.js");
 const sendQuery = require("./utils/sendQuery");
 
 exports.handler = async (event) => {
+  if (event.httpMethod !== "DELETE") {
+    return formattedResponse(405, { err: "Method not Supported" });
+  }
   const { id } = JSON.parse(event.body);
   const variables = { id };
   try {

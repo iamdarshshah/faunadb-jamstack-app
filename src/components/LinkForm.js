@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
-export default function LinkForm({ refreshLinks }) {
+import { RefreshLinksContext } from "../App";
+
+export default function LinkForm() {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
+  const loadlinks = useContext(RefreshLinksContext);
 
   const resetForm = () => {
     setName("");
@@ -20,7 +23,7 @@ export default function LinkForm({ refreshLinks }) {
         body: JSON.stringify(body),
       });
       resetForm();
-      refreshLinks();
+      loadlinks();
     } catch (error) {
       console.error(error);
     }

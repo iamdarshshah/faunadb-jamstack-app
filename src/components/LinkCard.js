@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 
-export default function LinkCard({ link, refreshLinks }) {
+import { RefreshLinksContext } from "../App";
+
+export default function LinkCard({ link }) {
+  const loadlinks = useContext(RefreshLinksContext);
   const archiveLink = async () => {
     link.archived = true;
     try {
@@ -8,7 +11,7 @@ export default function LinkCard({ link, refreshLinks }) {
         method: "PUT",
         body: JSON.stringify(link),
       });
-      refreshLinks();
+      loadlinks();
     } catch (err) {
       console.error(err);
     }
@@ -21,7 +24,7 @@ export default function LinkCard({ link, refreshLinks }) {
         method: "DELETE",
         body: JSON.stringify({ id }),
       });
-      refreshLinks();
+      loadlinks();
     } catch (err) {
       console.error(err);
     }

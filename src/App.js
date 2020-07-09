@@ -5,6 +5,8 @@ import LinkList from "./components/LinkList";
 // Pull all the links
 // Display all the links
 // Add, delete, update and archive functionality
+export const RefreshLinksContext = React.createContext();
+
 function App() {
   const [links, setLinks] = useState([]);
   const loadLinks = async () => {
@@ -24,8 +26,10 @@ function App() {
   return (
     <div className="container py-5">
       <h1 className="text-center mb-5">List O' Link</h1>
-      <LinkForm refreshLinks={loadLinks} />
-      <LinkList links={links} refreshLinks={loadLinks} />
+      <RefreshLinksContext.Provider value={loadLinks}>
+        <LinkForm />
+        <LinkList links={links} />
+      </RefreshLinksContext.Provider>
     </div>
   );
 }
